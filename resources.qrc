@@ -1,0 +1,9 @@
+<RCC>
+    <qresource prefix="/icon">
+        <file>source/ico.ico</file>
+        <file>source/cp_btn.png</file>
+        <file>source/cp_btn_d.png</file>
+        <file>source/del_btn.png</file>
+        <file>source/del_btn_d.png</file>
+    </qresource>
+</RCC>
