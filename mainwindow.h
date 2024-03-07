@@ -27,6 +27,8 @@ private slots:
 
     void on_switch_lg_btn_clicked();
 
+    void on_crypted_text_textChanged();
+
 private:
     Ui::MainWindow *ui;
 };

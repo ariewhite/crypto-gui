@@ -17,8 +17,6 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-//bool alphabet {false};
-
 
 void MainWindow::on_switch_btn_clicked()
 {
@@ -29,6 +27,8 @@ void MainWindow::on_switch_btn_clicked()
 //--- atbash crypting ---
 void MainWindow::on_plain_text_textChanged()
 {
+    ui->crypted_text->blockSignals(true);
+
     QString value {ui->plain_text->toPlainText()};
 
     QString alphabet {ui->alphabet_line->text()};
@@ -36,6 +36,25 @@ void MainWindow::on_plain_text_textChanged()
     value = CryptoUtils::atbash_crypto(value, alphabet);
 
     ui->crypted_text->setPlainText(value);
+
+    ui->crypted_text->blockSignals(false);
+}
+
+
+//--- atbash decrypt ---
+void MainWindow::on_crypted_text_textChanged()
+{
+    ui->plain_text->blockSignals(true);
+
+    QString value {ui->crypted_text->toPlainText()};
+
+    QString alphabet {ui->alphabet_line->text()};
+
+    value = CryptoUtils::atbash_decrypto(value, alphabet);
+
+    ui->plain_text->setPlainText(value);
+
+    ui->plain_text->blockSignals(false);
 }
 
 
@@ -54,4 +73,7 @@ void MainWindow::on_switch_lg_btn_clicked()
     }
     ui->alphabet_line->setText(current_alphabet);
 }
+
+
+
 
