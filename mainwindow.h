@@ -18,7 +18,7 @@ public:
     ~MainWindow();
 
     bool alphabet {false};
-    int state {0};
+    int state {2};
 private slots:
 
 
@@ -29,6 +29,8 @@ private slots:
     void on_switch_lg_btn_clicked();
 
     void on_crypted_text_textChanged();
+
+    void on_magic_btn_clicked();
 
 private:
     Ui::MainWindow *ui;

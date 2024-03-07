@@ -1,6 +1,7 @@
 #include "mainwindow.h"
 #include "./ui_mainwindow.h"
 #include "cryptoutils.h"
+#include "magiccube.h"
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -96,5 +97,10 @@ void MainWindow::on_switch_lg_btn_clicked()
 }
 
 
+//--- change magic cube ---
+void MainWindow::on_magic_btn_clicked()
+{
+    magiccube::create_dialog_window();
+    qInfo() << "window created";
 
-
+}
