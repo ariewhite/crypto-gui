@@ -18,6 +18,7 @@ public:
     ~MainWindow();
 
     bool alphabet {false};
+    int state {0};
 private slots:
 
 

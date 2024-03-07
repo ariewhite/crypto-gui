@@ -8,7 +8,7 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
 
-
+    ui->magic_frame->hide();
 
 }
 
@@ -18,9 +18,30 @@ MainWindow::~MainWindow()
 }
 
 
+//--- switch state ---
 void MainWindow::on_switch_btn_clicked()
 {
-    //auto x = ui->switch_btn->text();
+    switch (state) {
+    case 1:
+        ui->magic_frame->hide();
+        ui->atbash_frame->show();
+        state = 2;
+
+        break;
+    case 2:
+        ui->atbash_frame->hide();
+        ui->magic_frame->show();
+        state = 1;
+
+        break;
+
+    default:
+        ui->atbash_frame->show();
+        ui->magic_frame->hide();
+        state = 1;
+
+        break;
+    }
 }
 
 
