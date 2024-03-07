@@ -40,6 +40,17 @@
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
+  <property name="autoFillBackground">
+   <bool>false</bool>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">QMainWindow{
+	background-color: rgb(38, 38, 38);
+}</string>
+  </property>
+  <property name="locale">
+   <locale language="Russian" country="Russia"/>
+  </property>
   <widget class="QWidget" name="centralwidget">
    <widget class="QPushButton" name="switch_btn">
     <property name="geometry">
@@ -51,11 +62,36 @@
      </rect>
     </property>
     <property name="styleSheet">
-     <string notr="true">background-color: rgb(36, 47, 64);
+     <string notr="true">QPushButton{
+	border: none;
+	background-color: rgb(38, 38, 38);
+	color : rgb(226, 194, 255);
+	font: 34pt &quot;Anta&quot;;
+	border-radius: 1px;
+}
+QPushButton:hover{
+	border: 2px solid rgb(226, 194, 255);
+	background-color: rgb(38, 38, 38);
+	border-radius: 1px;
+}
+QPushButton:pressed{
+	border: 2px solid rgb(242, 247, 242);
+	color: rgb(242, 247, 242);
+	border-radius: 1px;
+}
 </string>
     </property>
     <property name="text">
      <string>Atbash</string>
+    </property>
+    <property name="autoDefault">
+     <bool>false</bool>
+    </property>
+    <property name="default">
+     <bool>false</bool>
+    </property>
+    <property name="flat">
+     <bool>false</bool>
     </property>
    </widget>
    <widget class="QLineEdit" name="alphabet_line">
@@ -67,6 +103,16 @@
       <height>24</height>
      </rect>
     </property>
+    <property name="font">
+     <font>
+      <family>Cascadia Code SemiLight</family>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QLineEdit{
+color: rgb(255, 170, 255)
+}</string>
+    </property>
     <property name="text">
      <string>абвгдеёжзийклмнопрстуфхцчшщъыьэюя</string>
     </property>
@@ -74,7 +120,7 @@
    <widget class="QLabel" name="alphabet_label">
     <property name="geometry">
      <rect>
-      <x>10</x>
+      <x>12</x>
       <y>110</y>
       <width>50</width>
       <height>24</height>
@@ -95,6 +141,22 @@
     </property>
     <property name="cursor" stdset="0">
      <cursorShape>IBeamCursor</cursorShape>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QTextEdit{
+	border: 2px solid rgb(71, 61, 80);
+	border-radius: 1px;
+	color: rgb(201, 192, 255);
+	selection-background-color: rgb(56, 56, 56);
+}
+QTextEdit:hover{
+	border: 2px solid rgb(226, 194, 255);
+}
+QTextEdit:focus{
+	border: 2px solid rgb(255, 255, 255);	
+	background-color: rgb(43, 43, 43);
+}
+</string>
     </property>
     <property name="frameShape">
      <enum>QFrame::NoFrame</enum>
@@ -117,6 +179,21 @@
     </property>
     <property name="cursor" stdset="0">
      <cursorShape>IBeamCursor</cursorShape>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QTextEdit{
+	border: 2px solid rgb(97, 117, 84);
+	border-radius: 1px;
+	color: rgb(208, 239, 177);
+	selection-background-color: rgb(56, 56, 56);
+}
+QTextEdit:hover{
+	border: 2px solid rgb(226, 194, 255);
+}
+QTextEdit:focus{
+	border: 2px solid rgb(255, 255, 255);	
+	background-color: rgb(43, 43, 43);
+}</string>
     </property>
     <property name="frameShape">
      <enum>QFrame::NoFrame</enum>
