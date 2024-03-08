@@ -14,15 +14,22 @@ class magiccube : public QDialog
 public:
     explicit magiccube(QWidget *parent = nullptr);
     ~magiccube();
+
     static void create_dialog_window();
-private slots:
-    QVector<QVector<int>> generate_magic_square();
+
+    QVector<QVector<int>> get_square();
+
     bool isMagicSquare(const QVector<QVector<int>>& square);
+
+    void fill_square(const QVector<QVector<int>>& square);
+
+
+
+private slots:
+
     void on_gen_cube_clicked();
 
     void on_check_cube_clicked();
-
-    QVector<QVector<int>> generateMagicSquare();
 
 private:
     Ui::magiccube *ui;

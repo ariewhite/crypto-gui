@@ -2,10 +2,9 @@
 #include "ui_magiccube.h"
 
 #include <QIcon>
-#include <QCoreApplication>>
 #include <QDebug>
-#include <algorithm>
-#include <random>
+#include <QFile>
+#include <QRandomGenerator>
 
 magiccube::magiccube(QWidget *parent)
     : QDialog(parent)
@@ -21,7 +20,7 @@ magiccube::~magiccube()
 
 
 //--- check for magic square ---
-bool isMagicSquare(const QVector<QVector<int>>& square){
+bool magiccube::isMagicSquare(const QVector<QVector<int>>& square){
     int n = square.size();
     int magicSum = n * (n * n + 1) / 2;
 
@@ -61,8 +60,19 @@ bool isMagicSquare(const QVector<QVector<int>>& square){
 }
 
 
-//--- generate magic square ---
-QVector<QVector<int>> generate_magic_square(){
+void magiccube::fill_square(const QVector<QVector<int>>& square){
+    QString result;
+    for (int i = 0; i < 4; ++i) {
+        for (int j = 0; j < 4; ++j) {
+            result += QString::number(square[i][j]) + " ";
+        }
+        result += "\n";
+    }
+    ui->min_out->setPlainText(result);
+}
+
+/*//--- generate magic square ---
+QVector<QVector<int>> magiccube::generate_magic_square(){
 
     // тут я распишу, ибо имхо читать даже свои алгоритмы тяжело
 
@@ -81,10 +91,12 @@ QVector<QVector<int>> generate_magic_square(){
 
     std::shuffle(numbers.begin(), numbers.end(), g);
 
+    qInfo() << numbers;
+
 
     // создаем двумерный масси (двумерный вектор)
     // create 2D vector
-    QVector<QVector<int>> magic_square(4, QVector<int>(n, 4));
+    QVector<QVector<int>> magic_square(4, QVector<int>(4));
     int index {0};
 
     for (int i = 0; i < 4; i++){
@@ -96,8 +108,12 @@ QVector<QVector<int>> generate_magic_square(){
     // так как нет*(а может и есть) какого-либо определенного магического алгоритма позволяющего
     // с первого раза достоверно создать кубик, шафлим числа, до тех пор пока куб не станет маг.
     // shuffle while "square" --> "magic square"
-
+    int x {0};
     while(!isMagicSquare(magic_square)){
+        x++;
+
+        qInfo() << x << " - " << isMagicSquare(magic_square);
+        qInfo() << magic_square;
         std::shuffle(numbers.begin(), numbers.end(), g);
 
         index = 0;
@@ -105,12 +121,13 @@ QVector<QVector<int>> generate_magic_square(){
         for (int i = 0; i < 4; i++){
             for (int j = 0;j < 4; j++){
                 magic_square[i][j] = numbers[index++];
+                qInfo() << magic_square[i][j];
             }
         }
     }
 
     return magic_square;
-}
+}*/
 
 
 //--- create dialog window ---
@@ -123,10 +140,49 @@ void magiccube::create_dialog_window(){
     mg->show();
 }
 
+QVector<QVector<int> > magiccube::get_square()
+{
+    QFile * file = new QFile(":/icon/source/output.txt");
 
-//--- call new cube ---
-void magiccube::on_gen_cube_clicked(){
+    if (!file->open(QIODevice::ReadOnly)){
+        qWarning() << "File not open" << file->errorString();
+        NULL;
+    }
 
+    QTextStream * in = new QTextStream(file);
+    QString * line = new QString;
+    QRandomGenerator * gen = new QRandomGenerator;
+
+    int x = gen->bounded(1, 7024);
+
+    int current_line {0};
+
+    while(!in->atEnd()){
+        *line = in->readLine();
+        ++current_line;
+        if(current_line == x){
+            break;
+        }
+    }
+
+
+    file->close();
+
+    QStringList value = line->split(" ");
+
+    QVector<QVector<int>> square(4, QVector<int>(4));
+
+    current_line = 0;
+
+    for (int i = 0; i < 4; i++){
+        for(int j = 0; j < 4; j++){
+            square[i][j] = value[current_line++].toInt();
+        }
+    }
+
+    line->detach();
+
+    return square;
 }
 
 
@@ -134,6 +190,35 @@ void magiccube::on_gen_cube_clicked(){
 void magiccube::on_check_cube_clicked(){
 
 }
+
+
+//--- call new cube ---
+void magiccube::on_gen_cube_clicked(){
+
+    QVector<QVector<int>> square = get_square();
+
+    fill_square(square);
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

@@ -5,5 +5,6 @@
         <file>source/cp_btn_d.png</file>
         <file>source/del_btn.png</file>
         <file>source/del_btn_d.png</file>
+        <file>source/output.txt</file>
     </qresource>
 </RCC>
