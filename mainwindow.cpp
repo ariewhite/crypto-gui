@@ -3,6 +3,7 @@
 #include "cryptoutils.h"
 #include "magiccube.h"
 
+
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
@@ -17,6 +18,8 @@ MainWindow::~MainWindow()
 {
     delete ui;
 }
+
+
 
 
 //--- switch state ---
@@ -45,38 +48,47 @@ void MainWindow::on_switch_btn_clicked()
     }
 }
 
+void MainWindow::extracted()
+{
+    NULL;
+}
+
 
 //--- atbash crypting ---
 void MainWindow::on_plain_text_textChanged()
 {
-    ui->crypted_text->blockSignals(true);
+    if (state == 2){
+        ui->crypted_text->blockSignals(true);
 
-    QString value {ui->plain_text->toPlainText()};
+        QString value {ui->plain_text->toPlainText()};
 
-    QString alphabet {ui->alphabet_line->text()};
+        QString alphabet {ui->alphabet_line->text()};
 
-    value = CryptoUtils::atbash_crypto(value, alphabet);
+        value = CryptoUtils::atbash_crypto(value, alphabet);
 
-    ui->crypted_text->setPlainText(value);
+        ui->crypted_text->setPlainText(value);
 
-    ui->crypted_text->blockSignals(false);
+        ui->crypted_text->blockSignals(false);
+    }
 }
 
 
 //--- atbash decrypt ---
 void MainWindow::on_crypted_text_textChanged()
 {
-    ui->plain_text->blockSignals(true);
+    if (state == 2){
+        ui->plain_text->blockSignals(true);
 
-    QString value {ui->crypted_text->toPlainText()};
+        QString value {ui->crypted_text->toPlainText()};
 
-    QString alphabet {ui->alphabet_line->text()};
+        QString alphabet {ui->alphabet_line->text()};
 
-    value = CryptoUtils::atbash_decrypto(value, alphabet);
+        value = CryptoUtils::atbash_decrypto(value, alphabet);
 
-    ui->plain_text->setPlainText(value);
+        ui->plain_text->setPlainText(value);
 
-    ui->plain_text->blockSignals(false);
+        ui->plain_text->blockSignals(false);
+    }
 }
 
 
@@ -104,3 +116,50 @@ void MainWindow::on_magic_btn_clicked()
     qInfo() << "window created";
 
 }
+
+void MainWindow::on_mcrypt_btn_clicked()
+{
+    ui->crypted_text->blockSignals(true);
+
+    QString value = ui->plain_text->toPlainText();
+
+    QVector<QVector<int>> square = magiccube::getMagic_square();
+
+    value = CryptoUtils::magic_crypto(value, square);
+
+    ui->crypted_text->setText(value);
+
+    ui->crypted_text->blockSignals(false);
+
+}
+
+
+void MainWindow::on_pushButton_clicked()
+{
+
+    qDebug() << "кнопка нажата!";
+
+    ui->plain_text->blockSignals(true);
+
+    QString value = ui->crypted_text->toPlainText();
+    qDebug() << "text complete" << value;
+
+    QVector<QVector<int>> square = magiccube::getMagic_square();
+    qDebug() << "magic square = " << square;
+
+    value = CryptoUtils::magic_decrypto(value, square);
+
+    ui->plain_text->setText(value);
+
+    ui->crypted_text->blockSignals(false);
+
+}
+
+
+
+
+
+
+
+
+

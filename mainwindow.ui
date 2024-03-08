@@ -278,6 +278,32 @@ color: rgb(255, 170, 255)
       <string>Настройка магического квадрата</string>
      </property>
     </widget>
+    <widget class="QPushButton" name="mcrypt_btn">
+     <property name="geometry">
+      <rect>
+       <x>200</x>
+       <y>40</y>
+       <width>151</width>
+       <height>24</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Шифрование</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="pushButton">
+     <property name="geometry">
+      <rect>
+       <x>360</x>
+       <y>40</y>
+       <width>131</width>
+       <height>24</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Расшифрование</string>
+     </property>
+    </widget>
    </widget>
   </widget>
  </widget>

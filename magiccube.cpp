@@ -18,6 +18,7 @@ magiccube::~magiccube()
     delete ui;
 }
 
+QVector<QVector<int>> magiccube::magic_square = QVector<QVector<int>>(4, QVector<int>(4));
 
 //--- check for magic square ---
 bool magiccube::isMagicSquare(const QVector<QVector<int>>& square){
@@ -140,8 +141,10 @@ void magiccube::create_dialog_window(){
     mg->show();
 }
 
+
 QVector<QVector<int> > magiccube::get_square()
 {
+    qDebug() << "new rect";
     QFile * file = new QFile(":/icon/source/output.txt");
 
     if (!file->open(QIODevice::ReadOnly)){
@@ -151,9 +154,10 @@ QVector<QVector<int> > magiccube::get_square()
 
     QTextStream * in = new QTextStream(file);
     QString * line = new QString;
-    QRandomGenerator * gen = new QRandomGenerator;
+    QRandomGenerator *gen = QRandomGenerator::global();
 
     int x = gen->bounded(1, 7024);
+    qDebug() << x;
 
     int current_line {0};
 
@@ -180,9 +184,14 @@ QVector<QVector<int> > magiccube::get_square()
         }
     }
 
-    line->detach();
+    qDebug() << square;
 
     return square;
+}
+
+QVector<QVector<int> > magiccube::getMagic_square()
+{
+    return magic_square;
 }
 
 
@@ -195,9 +204,9 @@ void magiccube::on_check_cube_clicked(){
 //--- call new cube ---
 void magiccube::on_gen_cube_clicked(){
 
-    QVector<QVector<int>> square = get_square();
+    magic_square = get_square();
 
-    fill_square(square);
+    fill_square(magic_square);
 
 }
 

@@ -11,6 +11,9 @@ class magiccube : public QDialog
 {
     Q_OBJECT
 
+    friend class MainWindow;
+    friend class CryptoUtils;
+
 public:
     explicit magiccube(QWidget *parent = nullptr);
     ~magiccube();
@@ -19,11 +22,14 @@ public:
 
     QVector<QVector<int>> get_square();
 
+    static QVector<QVector<int>> magic_square;
+
     bool isMagicSquare(const QVector<QVector<int>>& square);
 
     void fill_square(const QVector<QVector<int>>& square);
 
 
+    static QVector<QVector<int> > getMagic_square();
 
 private slots:
 
