@@ -144,7 +144,6 @@ void magiccube::create_dialog_window(){
 
 QVector<QVector<int> > magiccube::get_square()
 {
-    qDebug() << "new rect";
     QFile * file = new QFile(":/icon/source/output.txt");
 
     if (!file->open(QIODevice::ReadOnly)){
@@ -157,7 +156,6 @@ QVector<QVector<int> > magiccube::get_square()
     QRandomGenerator *gen = QRandomGenerator::global();
 
     int x = gen->bounded(1, 7024);
-    qDebug() << x;
 
     int current_line {0};
 
@@ -184,7 +182,7 @@ QVector<QVector<int> > magiccube::get_square()
         }
     }
 
-    qDebug() << square;
+    qDebug() << "magic squre - " << square;
 
     return square;
 }

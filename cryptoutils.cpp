@@ -107,7 +107,7 @@ QString CryptoUtils::magic_crypto(QString value, QVector<QVector<int>> & square)
         }
     }
 
-    qInfo() << result;
+    qDebug() << "magic crypto - " << result;
 
     return result;
 }
@@ -116,51 +116,24 @@ QString CryptoUtils::magic_crypto(QString value, QVector<QVector<int>> & square)
 QString CryptoUtils::magic_decrypto(QString value, QVector<QVector<int>> & square)
 {
 
-    QVector<int> originalVector = convert_to_QVector(square);
-    QList<int> invertedVector;
-
-    qDebug() << "original vector" << originalVector;
-
-    for (int i = originalVector.size() - 1; i >= 0; --i) {
-        invertedVector.append(originalVector[i]);
-    }
-
-    qDebug() << "Inverted Vector:";
-    qDebug() << invertedVector;
-
-    int index{0};
-    for (int i = 0; i < 4; i++){
-        for (int j = 0; j < 4; j++){
-            square[i][j] = invertedVector[index++];
-        }
-    }
-
-    QList<QPair<QString, int>> value_string;
-
-    for(int i = 1; i <= value.size(); i++){
-        value_string.push_back(qMakePair(QString(value[i-1]), i));
-    }
-
+    QVector<int> magic_numbers = convert_to_QVector(square);
     QString result;
-    for (int number : invertedVector) {
-        for (auto pair : value_string) {
-            if (pair.second == number) {
-                result += pair.first;
-                break;
+
+    for (int i = 1; i < value.size() + 1; ++i) {
+        for (int j = 0; j < magic_numbers.size(); ++j){
+            if(i == magic_numbers[j]){
+                result.append(value[j]);
             }
         }
     }
 
-    qInfo() << result;
+    qDebug() << "magic decrypto - " << result;
 
     return result;
-
 }
 
 QVector<int> CryptoUtils::convert_to_QVector(const QVector<QVector<int> > &nestedList)
 {
-
-    qDebug() << "nested list" <<nestedList;
     QVector<int> result;
     for (const QList<int>& innerList : nestedList) {
         result.reserve(result.size() + innerList.size());
@@ -168,7 +141,6 @@ QVector<int> CryptoUtils::convert_to_QVector(const QVector<QVector<int> > &neste
             result.append(value);
         }
     }
-    qDebug() << "result" << result;
     return result.toVector();
 }
 

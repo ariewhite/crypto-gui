@@ -29,12 +29,14 @@ void MainWindow::on_switch_btn_clicked()
     case 1:
         ui->magic_frame->hide();
         ui->atbash_frame->show();
+        ui->switch_btn->setText("Atbash");
         state = 2;
 
         break;
     case 2:
         ui->atbash_frame->hide();
         ui->magic_frame->show();
+        ui->switch_btn->setText("Magic Square");
         state = 1;
 
         break;
@@ -117,39 +119,87 @@ void MainWindow::on_magic_btn_clicked()
 
 }
 
+
+//--- magic crypto ---
 void MainWindow::on_mcrypt_btn_clicked()
 {
     ui->crypted_text->blockSignals(true);
 
     QString value = ui->plain_text->toPlainText();
-
     QVector<QVector<int>> square = magiccube::getMagic_square();
+    QString result;
 
-    value = CryptoUtils::magic_crypto(value, square);
+    if (square[0][0] == 0){
+        QMessageBox msg;
+        msg.setText("Сначала сгенерируйте магический квадрат!");
+        msg.setFixedSize(300, 200);
+        msg.exec();
+        return;
+    } else {
+        if (value.size() <= 16){
+            value = value.leftJustified(16, ' ');
 
-    ui->crypted_text->setText(value);
+            result = CryptoUtils::magic_crypto(value, square);
+
+        } else {
+            int iter = value.size() / 16;
+
+            for (int i = 0; i < iter + 1; ++i) {
+                QString chunk = value.mid(i * 16, 16);
+                if(chunk.length() <= 16){
+                    chunk = chunk.leftJustified(16, ' ');
+                }
+                chunk = CryptoUtils::magic_crypto(chunk, square);
+
+                result.append(chunk);
+            }
+        }
+    }
+
+    ui->crypted_text->setText(result);
 
     ui->crypted_text->blockSignals(false);
 
 }
 
 
+//--- magic decrypto ---
 void MainWindow::on_pushButton_clicked()
 {
-
-    qDebug() << "кнопка нажата!";
-
     ui->plain_text->blockSignals(true);
 
     QString value = ui->crypted_text->toPlainText();
-    qDebug() << "text complete" << value;
-
     QVector<QVector<int>> square = magiccube::getMagic_square();
-    qDebug() << "magic square = " << square;
+    QString result;
 
-    value = CryptoUtils::magic_decrypto(value, square);
+    if (square[0][0] == 0){
+        QMessageBox msg;
+        msg.setText("Сначала сгенерируйте магический квадрат!");
+        msg.setFixedSize(300, 200);
+        msg.exec();
+        return;
+    } else {
+        if (value.size() <= 16){
+            value = value.leftJustified(16, ' ');
 
-    ui->plain_text->setText(value);
+            result = CryptoUtils::magic_decrypto(value, square);
+
+        } else {
+            int iter = value.size() / 16;
+
+            for (int i = 0; i < iter + 1; ++i) {
+                QString chunk = value.mid(i * 16, 16);
+                if(chunk.length() <= 16){
+                    chunk = chunk.leftJustified(16, ' ');
+                }
+                chunk = CryptoUtils::magic_decrypto(chunk, square);
+
+                result.append(chunk);
+            }
+        }
+    }
+
+    ui->plain_text->setText(result);
 
     ui->crypted_text->blockSignals(false);
 
